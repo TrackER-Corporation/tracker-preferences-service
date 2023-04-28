@@ -1,4 +1,3 @@
-import axios from 'axios';
 import asyncHandler from 'express-async-handler';
 import { collections } from '../services/database.service';
 const ObjectId = require("mongodb").ObjectId;
