@@ -19,19 +19,20 @@ export const getPreferenceById = asyncHandler(async (req, res) => {
 // @route   POST /api/goals
 // @access  Private
 export const createPreference = asyncHandler(async (req, res) => {
-    if (!req.params.id) {
+    if (req.params.id === null || !req.params.id) {
         res.status(400)
         return
     }
     const preference = await collections?.preference?.insertOne({
-        activityLog: true,
-        avatar: "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png",
         userId: new ObjectId(req.params.id),
+        activityLog: true,
         notification: true,
-        news: false
+        news: false,
+        avatar: "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
     })
-
-    res.status(200).json(preference)
+    if(preference){
+        res.status(200).json(preference)
+    }
 })
 
 // @desc    Update goal
@@ -68,3 +69,18 @@ export const getAvatarById = asyncHandler(async (req, res) => {
 
     res.status(200).json(goal.avatar)
 })
+
+export const deleteAvatarByUserId = asyncHandler(async (req, res) => {
+    if (!req.params.id) {
+        res.status(400)
+        return
+    }
+    const goal = await collections?.preference?.findOne({ userId: new ObjectId(req.params.id) })
+    if (goal === null) {
+        res.status(401)
+    }else{
+        await collections.preference?.deleteOne({ userId: new ObjectId(req.params.id) })
+        res.status(200).json(goal)
+    }
+})
+
