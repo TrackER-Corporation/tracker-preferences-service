@@ -1,7 +1,6 @@
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { createPreference, updatePreference, getPreferenceById, getAvatarById, deleteAvatarByUserId } from "../db/controller/controller";
-import { ObjectId } from "mongodb";
-import { collections, connectToDatabase } from "../db/services/database.service";
+import { connectToDatabase } from "../db/services/database.service";
 
 
 interface Response {
