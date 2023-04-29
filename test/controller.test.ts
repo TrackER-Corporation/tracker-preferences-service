@@ -1,7 +1,6 @@
 import { beforeAll, describe, expect, it, vi } from "vitest";
-import { createPreference, updatePreference, getPreferenceById, getAvatarById} from "../db/controller/controller";
-import { ObjectId } from "mongodb";
-import { collections, connectToDatabase } from "../db/services/database.service";
+import { createPreference, updatePreference, getPreferenceById, getAvatarById, deleteAvatarByUserId } from "../db/controller/controller";
+import { connectToDatabase } from "../db/services/database.service";
 
 
 interface Response {
@@ -28,10 +27,22 @@ describe('Activity controller', async () => {
         vi.clearAllMocks();
     });
 
+    it('should return ok creating new preference', async () => {
+        const req = {
+            params: {
+                id: "111111111111"
+            }
+        };
+        const res = mockResponse();
+        await createPreference(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+        //console.log(res.json.calls[0])
+    });
+
     it('should return ok for existing preference', async () => {
         const req = {
             params: {
-                id: "62bee981e63f093c813b8a02"
+                id: "111111111111"
             }
         };
         const res = mockResponse();
@@ -42,7 +53,7 @@ describe('Activity controller', async () => {
     it('should return error getting for no preference id', async () => {
         const req = {
             params: {
-                id: "111111111111"
+                id: "999999999999"
             }
         };
         const res = mockResponse();
@@ -59,17 +70,6 @@ describe('Activity controller', async () => {
         const res = mockResponse();
         await createPreference(req, res);
         expect(res.status).toHaveBeenCalledWith(400);
-    });
-
-    it('should return ok creating new preference', async () => {
-        const req = {
-            params: {
-                id: "111111111111"
-            }
-        };
-        const res = mockResponse();
-        await createPreference(req, res);
-        expect(res.status).toHaveBeenCalledWith(200);
     });
 
     it('should return error updating for no preference id', async () => {
@@ -137,7 +137,39 @@ describe('Activity controller', async () => {
         const res = mockResponse();
         await getAvatarById(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
-        await collections.preference?.deleteOne({ userId: new ObjectId("111111111111") });
+    });
+
+    it('should return error deleting avatar no id', async () => {
+        const req = {
+            params: {
+                id: "",
+            }
+        };
+        const res = mockResponse();
+        await deleteAvatarByUserId(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    it('should return error deleting avatar wrong id', async () => {
+        const req = {
+            params: {
+                id: "999999999999",
+            }
+        };
+        const res = mockResponse();
+        await deleteAvatarByUserId(req, res);
+        expect(res.status).toHaveBeenCalledWith(401);
+    });
+
+    it('should return ok deleting avatar', async () => {
+        const req = {
+            params: {
+                id: "111111111111",
+            }
+        };
+        const res = mockResponse();
+        await deleteAvatarByUserId(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
     });
 
 });
