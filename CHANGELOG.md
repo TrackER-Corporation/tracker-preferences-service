@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/TrackER-Corporation/tracker-preferences-service/compare/v1.1.0...v1.1.1) (2023-05-11)
+
+
+### Bug Fixes
+
+* return status ([07ebedb](https://github.com/TrackER-Corporation/tracker-preferences-service/commit/07ebedb906830ad8edf242db3d4926bd5e2a0314))
+* return value on update ([680216b](https://github.com/TrackER-Corporation/tracker-preferences-service/commit/680216ba2c67140063d814c72ac4006eb4c86022))
+
 ## [1.1.0](https://github.com/TrackER-Corporation/tracker-preferences-service/compare/v1.0.0...v1.1.0) (2023-05-02)
 
 
