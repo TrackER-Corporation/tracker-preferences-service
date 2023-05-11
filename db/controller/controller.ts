@@ -11,7 +11,7 @@ export const getPreferenceById = asyncHandler(async (req, res, next) => {
         res.status(404)
         throw Error('Not found')
     }
-    res.status(200).json({ goal })
+    res.status(200).json(goal)
 })
 
 // @desc    Set goal
@@ -52,7 +52,7 @@ export const updatePreference = asyncHandler(async (req, res) => {
         { $set: { ...req.body } },
         { returnDocument: 'after' }
     )
-    res.status(200).json(update)
+    res.status(200).json(update?.value)
 })
 
 export const getAvatarById = asyncHandler(async (req, res) => {
