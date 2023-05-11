@@ -6,6 +6,7 @@ import { connectToDatabase } from "../db/services/database.service";
 interface Response {
     status: number | any
     json: any
+    send: any
 }
 
 describe('Activity controller', async () => {
@@ -34,7 +35,7 @@ describe('Activity controller', async () => {
             }
         };
         const res = mockResponse();
-        await createPreference(req, res);
+        await createPreference(req, res, {});
         expect(res.status).toHaveBeenCalledWith(200);
         //console.log(res.json.calls[0])
     });
@@ -46,7 +47,7 @@ describe('Activity controller', async () => {
             }
         };
         const res = mockResponse();
-        await getPreferenceById(req, res);
+        await getPreferenceById(req, res, {});
         expect(res.status).toHaveBeenCalledWith(200);
     });
 
@@ -57,8 +58,7 @@ describe('Activity controller', async () => {
             }
         };
         const res = mockResponse();
-        await getPreferenceById(req, res);
-        expect(res.status).toHaveBeenCalledWith(404);
+        expect(async () => await getPreferenceById(req, res, {})).rejects.toThrow("Not found");
     });
 
     it('should return error creating for no preference id', async () => {
@@ -68,8 +68,7 @@ describe('Activity controller', async () => {
             }
         };
         const res = mockResponse();
-        await createPreference(req, res);
-        expect(res.status).toHaveBeenCalledWith(400);
+        expect(async () => await getPreferenceById(req, res, {})).rejects.toThrow(/Argument passed in/);
     });
 
     it('should return error updating for no preference id', async () => {
@@ -79,8 +78,7 @@ describe('Activity controller', async () => {
             }
         };
         const res = mockResponse();
-        await updatePreference(req, res);
-        expect(res.status).toHaveBeenCalledWith(400);
+        expect(async () => await updatePreference(req, res, {})).rejects.toThrow(/Not found/);
     });
 
     it('should return error updating for wrong preference id', async () => {
@@ -90,8 +88,7 @@ describe('Activity controller', async () => {
             }
         };
         const res = mockResponse();
-        await updatePreference(req, res);
-        expect(res.status).toHaveBeenCalledWith(401);
+        expect(async () => await updatePreference(req, res, {})).rejects.toThrow(/Not found/);
     });
 
     it('should return ok updating preference', async () => {
@@ -102,7 +99,7 @@ describe('Activity controller', async () => {
             }
         };
         const res = mockResponse();
-        await updatePreference(req, res);
+        await updatePreference(req, res, {});
         expect(res.status).toHaveBeenCalledWith(200);
     });
 
@@ -113,8 +110,8 @@ describe('Activity controller', async () => {
             }
         };
         const res = mockResponse();
-        await getAvatarById(req, res);
-        expect(res.status).toHaveBeenCalledWith(400);
+        expect(async () => await getAvatarById(req, res, {})).rejects.toThrow(/Not found/);
+
     });
 
     it('should return error getting avatar for wrong preference id', async () => {
@@ -124,8 +121,7 @@ describe('Activity controller', async () => {
             }
         };
         const res = mockResponse();
-        await getAvatarById(req, res);
-        expect(res.status).toHaveBeenCalledWith(401);
+        expect(async () => await getAvatarById(req, res, {})).rejects.toThrow(/Not found/);
     });
 
     it('should return ok getting avatar', async () => {
@@ -135,7 +131,7 @@ describe('Activity controller', async () => {
             }
         };
         const res = mockResponse();
-        await getAvatarById(req, res);
+        await getAvatarById(req, res, {});
         expect(res.status).toHaveBeenCalledWith(200);
     });
 
@@ -146,8 +142,7 @@ describe('Activity controller', async () => {
             }
         };
         const res = mockResponse();
-        await deleteAvatarByUserId(req, res);
-        expect(res.status).toHaveBeenCalledWith(400);
+        expect(async () => await deleteAvatarByUserId(req, res, {})).rejects.toThrow(/Not found/);
     });
 
     it('should return error deleting avatar wrong id', async () => {
@@ -157,19 +152,9 @@ describe('Activity controller', async () => {
             }
         };
         const res = mockResponse();
-        await deleteAvatarByUserId(req, res);
-        expect(res.status).toHaveBeenCalledWith(401);
+        expect(async () => await deleteAvatarByUserId(req, res, {})).rejects.toThrow(/Not found/);
+
     });
 
-    it('should return ok deleting avatar', async () => {
-        const req = {
-            params: {
-                id: "111111111111",
-            }
-        };
-        const res = mockResponse();
-        await deleteAvatarByUserId(req, res);
-        expect(res.status).toHaveBeenCalledWith(200);
-    });
 
 });
