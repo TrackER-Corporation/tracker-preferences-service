@@ -145,14 +145,15 @@ describe('Activity controller', async () => {
         expect(async () => await deleteAvatarByUserId(req, res, {})).rejects.toThrow(/Not found/);
     });
 
-    it('should return error deleting avatar wrong id', async () => {
+    it('should return ok deleting avatar', async () => {
         const req = {
             params: {
-                id: "999999999999",
+                id: "111111111111",
             }
         };
         const res = mockResponse();
-        expect(async () => await deleteAvatarByUserId(req, res, {})).rejects.toThrow(/Not found/);
+        await deleteAvatarByUserId(req, res, {});
+        expect(res.status).toHaveBeenCalledWith(200);
 
     });
 
