@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/TrackER-Corporation/tracker-preferences-service/compare/v1.1.1...v1.1.2) (2023-05-14)
+
+
+### Bug Fixes
+
+* deleting test ([0e6f0f9](https://github.com/TrackER-Corporation/tracker-preferences-service/commit/0e6f0f98266875d405e99f1730540abd838cbc74))
+
 ## [1.1.1](https://github.com/TrackER-Corporation/tracker-preferences-service/compare/v1.1.0...v1.1.1) (2023-05-11)
 
 
